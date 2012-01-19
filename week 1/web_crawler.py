@@ -13,7 +13,8 @@ try:
     maxdepth = int(sys.argv[2])
     searchString = sys.argv[3]
 except:
-
+    print "Usage: python2 web_crawler.py URL DEPTH SEARCH_STRING"
+    sys.exit()
 
 urlset = Set([seedurl])
 savedurls = Set()
@@ -21,15 +22,9 @@ q = deque([(0, seedurl)])
 
 output = open('output.txt','w')
 
-# f = urllib2.urlopen(seedurl, timeout=10)
-# soup = BeautifulSoup(f.read())
-# tags = soup('a')
-# pprint([x.get('href') for x in tags], indent = 2)
-
 
 while q:
     current_depth, url = q.popleft()
-    print current_depth, url
 
     try:
         f = urllib2.urlopen(url, timeout=10)
@@ -37,9 +32,12 @@ while q:
         f.close()
         soup = BeautifulSoup(content)
         tags = soup('a')
+
         if re.search(searchString, content):
             savedurls.add(url)
+            print >> output, url
             output.flush()
+
         if current_depth >= maxdepth:
             continue
         for tag in tags:

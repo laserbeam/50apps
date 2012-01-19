@@ -1,4 +1,10 @@
 #!/usr/bin/env python2
+# Name: web_crawler.py
+#
+# Author: Catalin Balan
+# Version: 0.1
+# Created: 16/01/2012
+
 import re
 import sys
 import urllib2
